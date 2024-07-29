@@ -1,6 +1,6 @@
 ---
 
-- name: Ensure 'Windows Welcome Experience' disabled.
+- name: Ensure 'Windows Welcome Experience' disabled
   ansible.windows.win_regedit:
     hive: "C:\\Users\\{{ loop_user }}\\NTUSER.dat"
     path: HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager
