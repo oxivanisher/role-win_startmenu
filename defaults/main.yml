@@ -1,2 +1,5 @@
 ---
 # defaults file for win_startmenu
+win_startmenu_users:
+  - Default
+  - "{{ ansibe_user }}"

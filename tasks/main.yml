@@ -3,33 +3,42 @@
 
 - name: Ensure Automatic Install of Suggested Apps disabled.
   ansible.windows.win_regedit:
+    hive: "C:\\Users\\{{ item }}\\NTUSER.dat"
     path: HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager
     name: SilentInstalledAppsEnabled
     data: 0
     type: dword
+  loop: "{{ win_startmenu_users }}"
 
 - name: Ensure App Suggestions in Start menu disabled.
   ansible.windows.win_regedit:
+    hive: "C:\\Users\\{{ item }}\\NTUSER.dat"
     path: HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager
     name: SystemPaneSuggestionsEnabled
     data: 0
     type: dword
+  loop: "{{ win_startmenu_users }}"
+
+- name: Ensure Bing search is disabled in Start menu disabled.
+  ansible.windows.win_regedit:
+    hive: "C:\\Users\\{{ item }}\\NTUSER.dat"
+    path: HKCU:\Software\Policies\Microsoft\Windows\Explorer
+    name: DisableSearchBoxSuggestions
+    data: 1
+    type: dword
+  loop: "{{ win_startmenu_users }}"
 
 - name: Ensure popup "tips" about Windows disabled.
   ansible.windows.win_regedit:
+    hive: "C:\\Users\\{{ item }}\\NTUSER.dat"
     path: HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager
     name: SoftLandingEnabled
     data: 0
     type: dword
+  loop: "{{ win_startmenu_users }}"
 
 - name: Ensure 'Windows Welcome Experience' disabled.
-  ansible.windows.win_regedit:
-    path: HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager
-    name: "{{ item }}"
-    data: 0
-    type: dword
-  loop:
-    - SubscribedContent-310093Enabled
-    - SubscribedContent-338388Enabled
-    - SubscribedContent-338389Enabled
-    - SubscribedContent-88000326Enabled
+  ansible.builtin.include_tasks: nested_welcom_exp_tasks.yml
+  loop: "{{ win_startmenu_users }}"
+  loop_control:
+    loop_var: loop_user
