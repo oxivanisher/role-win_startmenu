@@ -2,4 +2,4 @@
 # defaults file for win_startmenu
 win_startmenu_users:
   - Default
-  - "{{ ansible_user }}"
+win_startmenu_also_for_ansible_user: true

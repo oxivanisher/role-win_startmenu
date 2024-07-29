@@ -11,9 +11,10 @@ This role is built to be used with Ansible oder SSH on Windows.
 Role Variables
 --------------
 
-| Name                 | Comment                        | Default value                    |
-|----------------------|--------------------------------|----------------------------------|
-| win_startmenu_users  | List of users to be configured | `[Default, "{{ ansible_user }}"]`|
+| Name                                | Comment                        | Default value |
+|-------------------------------------|--------------------------------|---------------|
+| win_startmenu_users                 | List of users to be configured | `[Default]`   |
+| win_startmenu_also_for_ansible_user | Also configure `ansible_user`  | `true`        |
 
 Example Playbook
 ----------------

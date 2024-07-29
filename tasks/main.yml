@@ -1,7 +1,7 @@
 ---
 # Based on: https://github.com/AlexNabokikh/windows-playbook/blob/8be81399018d151e5f4f5ea08034fc4bd0ad30da/tasks/start_menu.yml
 
-- name: Ensure Automatic Install of Suggested Apps disabled
+- name: Ensure Automatic Install of Suggested Apps disabled for win_startmenu_users
   ansible.windows.win_regedit:
     hive: "C:\\Users\\{{ item }}\\NTUSER.dat"
     path: HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager
@@ -10,7 +10,15 @@
     type: dword
   loop: "{{ win_startmenu_users }}"
 
-- name: Ensure App Suggestions in Start menu disabled
+- name: Ensure Automatic Install of Suggested Apps disabled for ansible_user
+  ansible.windows.win_regedit:
+    path: HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager
+    name: SilentInstalledAppsEnabled
+    data: 0
+    type: dword
+  when: win_startmenu_also_for_ansible_user | bool
+
+- name: Ensure App Suggestions in Start menu disabled for win_startmenu_users
   ansible.windows.win_regedit:
     hive: "C:\\Users\\{{ item }}\\NTUSER.dat"
     path: HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager
@@ -19,7 +27,15 @@
     type: dword
   loop: "{{ win_startmenu_users }}"
 
-- name: Ensure Bing search is disabled in Start menu disabled
+- name: Ensure App Suggestions in Start menu disabled  for ansible_user
+  ansible.windows.win_regedit:
+    path: HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager
+    name: SystemPaneSuggestionsEnabled
+    data: 0
+    type: dword
+  when: win_startmenu_also_for_ansible_user | bool
+
+- name: Ensure Bing search is disabled in Start menu disabled for win_startmenu_users
   ansible.windows.win_regedit:
     hive: "C:\\Users\\{{ item }}\\NTUSER.dat"
     path: HKCU:\Software\Policies\Microsoft\Windows\Explorer
@@ -28,7 +44,15 @@
     type: dword
   loop: "{{ win_startmenu_users }}"
 
-- name: Ensure popup "tips" about Windows disabled
+- name: Ensure Bing search is disabled in Start menu disabled for ansible_user
+  ansible.windows.win_regedit:
+    path: HKCU:\Software\Policies\Microsoft\Windows\Explorer
+    name: DisableSearchBoxSuggestions
+    data: 1
+    type: dword
+  when: win_startmenu_also_for_ansible_user | bool
+
+- name: Ensure popup "tips" about Windows disabled for win_startmenu_users
   ansible.windows.win_regedit:
     hive: "C:\\Users\\{{ item }}\\NTUSER.dat"
     path: HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager
@@ -37,8 +61,31 @@
     type: dword
   loop: "{{ win_startmenu_users }}"
 
-- name: Ensure 'Windows Welcome Experience' per user are disabled
+- name: Ensure popup "tips" about Windows disabled for ansible_user
+  ansible.windows.win_regedit:
+    path: HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager
+    name: SoftLandingEnabled
+    data: 0
+    type: dword
+  when: win_startmenu_also_for_ansible_user | bool
+
+- name: Ensure 'Windows Welcome Experience' per user are disabled for win_startmenu_users
   ansible.builtin.include_tasks: nested_welcom_exp_tasks.yml
   loop: "{{ win_startmenu_users }}"
   loop_control:
     loop_var: loop_user
+
+- name: Ensure 'Windows Welcome Experience' items are disabled for ansible_user
+  ansible.windows.win_regedit:
+    path: HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager
+    name: "{{ loop_item }}"
+    data: 0
+    type: dword
+  loop:
+    - SubscribedContent-310093Enabled
+    - SubscribedContent-338388Enabled
+    - SubscribedContent-338389Enabled
+    - SubscribedContent-88000326Enabled
+  loop_control:
+    loop_var: loop_item
+  when: win_startmenu_also_for_ansible_user | bool
