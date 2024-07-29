@@ -37,7 +37,7 @@
     type: dword
   loop: "{{ win_startmenu_users }}"
 
-- name: Ensure 'Windows Welcome Experience' disabled
+- name: Ensure 'Windows Welcome Experience' per user are disabled
   ansible.builtin.include_tasks: nested_welcom_exp_tasks.yml
   loop: "{{ win_startmenu_users }}"
   loop_control:
