@@ -3,7 +3,7 @@
 - name: Ensure 'Windows Welcome Experience' items are disabled
   ansible.windows.win_regedit:
     hive: "C:\\Users\\{{ loop_user }}\\NTUSER.dat"
-    path: HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager
+    path: HKLM:\ANSIBLE\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager
     name: "{{ loop_item }}"
     data: 0
     type: dword

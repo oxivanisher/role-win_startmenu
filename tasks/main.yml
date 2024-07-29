@@ -4,7 +4,7 @@
 - name: Ensure Automatic Install of Suggested Apps disabled for win_startmenu_users
   ansible.windows.win_regedit:
     hive: "C:\\Users\\{{ item }}\\NTUSER.dat"
-    path: HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager
+    path: HKLM:\ANSIBLE\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager
     name: SilentInstalledAppsEnabled
     data: 0
     type: dword
@@ -21,7 +21,7 @@
 - name: Ensure App Suggestions in Start menu disabled for win_startmenu_users
   ansible.windows.win_regedit:
     hive: "C:\\Users\\{{ item }}\\NTUSER.dat"
-    path: HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager
+    path: HKLM:\ANSIBLE\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager
     name: SystemPaneSuggestionsEnabled
     data: 0
     type: dword
@@ -38,7 +38,7 @@
 - name: Ensure Bing search is disabled in Start menu disabled for win_startmenu_users
   ansible.windows.win_regedit:
     hive: "C:\\Users\\{{ item }}\\NTUSER.dat"
-    path: HKCU:\Software\Policies\Microsoft\Windows\Explorer
+    path: HKLM:\ANSIBLE\Software\Policies\Microsoft\Windows\Explorer
     name: DisableSearchBoxSuggestions
     data: 1
     type: dword
@@ -55,7 +55,7 @@
 - name: Ensure popup "tips" about Windows disabled for win_startmenu_users
   ansible.windows.win_regedit:
     hive: "C:\\Users\\{{ item }}\\NTUSER.dat"
-    path: HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager
+    path: HKLM:\ANSIBLE\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager
     name: SoftLandingEnabled
     data: 0
     type: dword
