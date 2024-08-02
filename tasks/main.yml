@@ -86,6 +86,8 @@
     - SubscribedContent-338388Enabled
     - SubscribedContent-338389Enabled
     - SubscribedContent-88000326Enabled
+    - RotatingLockScreenOverlayEnabled
+    - SubscribedContent-338387Enabled
   loop_control:
     loop_var: loop_item
   when: win_startmenu_also_for_ansible_user | bool
