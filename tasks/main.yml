@@ -44,6 +44,15 @@
     type: dword
   loop: "{{ win_startmenu_users }}"
 
+- name: Ensure Copilot is disabled in Start menu disabled for win_startmenu_users
+  ansible.windows.win_regedit:
+    hive: "C:\\Users\\{{ item }}\\NTUSER.dat"
+    path: HKLM:\ANSIBLE\Software\Policies\Microsoft\Windows\WindowsCopilot
+    name: TurnOffWindowsCopilot
+    data: 1
+    type: dword
+  loop: "{{ win_startmenu_users }}"
+
 - name: Ensure Bing search is disabled in Start menu disabled for ansible_user
   ansible.windows.win_regedit:
     path: HKCU:\Software\Policies\Microsoft\Windows\Explorer
