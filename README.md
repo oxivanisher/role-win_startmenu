@@ -1,7 +1,11 @@
 win_startmenu
 =============
 
-Configure Start menu related settings.
+Configure Start menu related settings:
+* Disable app succestions
+* Disable bing search
+* Disable "tip" popup (Ads)
+* Disable copilot
 
 Requirements
 ------------
