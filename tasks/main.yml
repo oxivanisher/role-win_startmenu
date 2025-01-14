@@ -51,3 +51,20 @@
     data: 0
     type: dword
   when: win_startmenu_also_for_ansible_user | bool
+
+- name: Ensure Copilot is disabled in Start menu disabled for win_startmenu_users
+  ansible.windows.win_regedit:
+    hive: "C:\\Users\\{{ item }}\\NTUSER.dat"
+    path: HKLM:\ANSIBLE\Software\Policies\Microsoft\Windows\WindowsCopilot
+    name: TurnOffWindowsCopilot
+    data: 1
+    type: dword
+  loop: "{{ win_startmenu_users }}"
+
+- name: Ensure Copilot is disabled in Start menu disabled for ansible_user
+  ansible.windows.win_regedit:
+    path: HKCU:\Software\Policies\Microsoft\Windows\WindowsCopilot
+    name: TurnOffWindowsCopilot
+    data: 1
+    type: dword
+  when: win_startmenu_also_for_ansible_user | bool
