@@ -1,5 +1,6 @@
 win_startmenu
 =============
+[![Ansible Lint](https://github.com/oxivanisher/role-win_startmenu/actions/workflows/ansible-lint.yml/badge.svg)](https://github.com/oxivanisher/role-win_startmenu/actions/workflows/ansible-lint.yml)
 
 Configure Start menu related settings:
 * Disable app succestions
